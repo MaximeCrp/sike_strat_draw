@@ -1,19 +1,20 @@
-import SIKEStrategyDrawer
+from sike_strat_draw import drawer
+import random
 
 if __name__ == "__main__":
-    import random
 
-    drawer = SIKEStrategyDrawer.Drawer()
-
+    dw = drawer.Drawer()
+    dw.init_drawing()
+    
     for i in range(10):
         isogeny = bool(random.getrandbits(1))
         if isogeny:
-            drawer.draw_isogeny()
+            dw.draw_isogeny()
         else:
-            drawer.draw_doubling()
+            dw.draw_doubling()
 
-    drawer.end_tree()
+    dw.end_tree()
 
-    drawer.save_drawing()
+    dw.save_drawing()
 
-    drawer.end_drawing()
+    dw.end_drawing()
