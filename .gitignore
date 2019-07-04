@@ -1,0 +1,4 @@
+/dist/
+/*.egg-infp
+__pycache__/
+.DS_Store
