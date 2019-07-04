@@ -1,4 +1,5 @@
 /dist/
 /*.egg-infp
 __pycache__/
+sike_strat_draw/__pycache__/
 .DS_Store
