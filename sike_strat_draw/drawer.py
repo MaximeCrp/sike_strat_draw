@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import turtle
 import canvasvg
 import datetime
