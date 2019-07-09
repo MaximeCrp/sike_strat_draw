@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import turtle
 import canvasvg
 import datetime
@@ -18,7 +20,7 @@ class Drawer:
         screen_width_ratio=1.0,
         screen_height_ratio=1.0,
         drawing_speed=20,
-        save_file_name=None,
+        save_file_name=None
     ):
         self.turtle_size = 20
         self.tree_angle = tree_angle
@@ -40,6 +42,22 @@ class Drawer:
 
         self.number_isogenies = 0
         self.number_doubling = 0
+
+        self.screen = None
+        self.painter = None
+
+        self.point_dict = {}
+
+    def save_point(self, row, index):
+        if (row, index) in self.point_dict:
+            print("Already in dict!")
+        else:
+            self.point_dict.update({(row, index): self.painter.pos()})
+
+    def restore_point(self, row, index):
+        self.painter.penup()
+        self.painter.setposition(self.point_dict.get((row, index)))
+        self.painter.pendown()
 
     def init_drawing(self):
         self.screen = turtle.Screen()
@@ -102,17 +120,10 @@ class Drawer:
         self.draw_dot()
         self.painter.left(self.tree_angle)
 
-    def end_tree(self):
+    def draw_final_dot(self):
         self.painter.dot(2 * self.dot_radius, self.final_dot_color)
-        self.painter.pencolor("black")
 
-        final_point_name = "[{doubling}]R{isogeny}".format(
-            doubling=2 ** self.number_doubling, isogeny=self.number_isogenies
-        )
-        self.painter.write(
-            final_point_name, move=False, align="right", font=("Arial", 16, "bold")
-        )
-
+    def end_tree(self):
         self.painter.hideturtle()
 
     def save_drawing(self):

@@ -17,4 +17,5 @@ if __name__ == "__main__":
 
     dw.save_drawing()
 
+    dw.draw_final_dot()
     dw.end_drawing()
