@@ -159,11 +159,13 @@ class Drawer:
 
         :param row: row of curve point in drawn strategy
         :param index: index of curve point in drawn strategy
+        :returns: True if point has been saved this time, False if said point had already been saved and not updated
         """
         if (row, index) in self.point_dict:
-            print("Already in dict!")
+            return False
         else:
             self.point_dict.update({(row, index): self.painter.pos()})
+            return True
 
     def restore_point(self, row, index):
         """
