@@ -2,7 +2,7 @@ from sike_strat_draw import drawer
 import random
 
 if __name__ == "__main__":
-
+    """ This example has no mathematical background and just shows some features of the module """
     dw = drawer.Drawer()
     dw.init_drawing()
 
