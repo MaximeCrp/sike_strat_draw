@@ -22,8 +22,6 @@ turtle :
     module used to actually draw the graph
 canvasvg :
     community tool to save tkinter canva into a svg file
-datetime :
-    for default file name saving with current date and time
     
 :Example:
 
@@ -63,7 +61,7 @@ class Drawer:
         :param final_dot_color: default "green", color of dots representing destination points
         :param screen_width_ratio: default 1.0, floating number for screen width ratio
         :param screen_height_ratio: default 1.0, floating number for screen height ratio
-        :param drawing_speed: default 20, integer driving the pace of drawing
+        :param drawing_speed: default 0, integer in the range 0..10 setting drawing speed. 0 is fastest (no animation)
         :param save_file_name: default None, custom file name for canvas saving, defaults to current date/time
 
         Methods
@@ -125,7 +123,7 @@ class Drawer:
         final_dot_color="green",
         screen_width_ratio=1.0,
         screen_height_ratio=1.0,
-        drawing_speed=20,
+        drawing_speed=0,
         save_file_name=None,
     ):
         self.turtle_size = 20
@@ -162,7 +160,7 @@ class Drawer:
 
         :param row: row of curve point in drawn strategy
         :param index: index of curve point in drawn strategy
-        :returns: True if point has been saved this time, False if said point had already been saved and not updated
+        :return: True if point has been saved this time, False if said point had already been saved and not updated
         """
         if (row, index) in self.point_dict:
             return False
