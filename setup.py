@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="sike_strat_draw",
-    version="1.0",
+    version="1.1",
     description="Tool to draw SIKE or other isogeny-based crypotgraphic protocols strategies",
     url="https://github.com/MaximeCrp/sike_strat_draw",
     author="Maxime Crampon",
