@@ -1,5 +1,6 @@
 import turtle
 import canvasvg
+import math
 import datetime
 
 """
@@ -117,6 +118,7 @@ class Drawer:
         arrow_head_length=5,
         arrow_head_angle=135,
         dot_radius=4,
+        pyramid_length=None,
         isogeny_color="red",
         doubling_color="blue",
         dot_color="black",
@@ -124,7 +126,7 @@ class Drawer:
         screen_width_ratio=1.0,
         screen_height_ratio=1.0,
         drawing_speed=20,
-        save_file_name=None
+        save_file_name=None,
     ):
         self.turtle_size = 20
         self.tree_angle = tree_angle
@@ -132,12 +134,13 @@ class Drawer:
         self.arrow_head_length = arrow_head_length
         self.arrow_head_angle = arrow_head_angle
         self.dot_radius = dot_radius
+        self.pyramid_length = pyramid_length
 
         self.isogeny_color = isogeny_color
         self.doubling_color = doubling_color
         self.dot_color = dot_color
         self.final_dot_color = final_dot_color
-        
+
         self.screen_width_ratio = screen_width_ratio
         self.screen_height_ratio = screen_height_ratio
         self.drawing_speed = drawing_speed
@@ -181,12 +184,41 @@ class Drawer:
     def init_drawing(self):
         """Initiates screen, turtle and first point"""
         self.screen = turtle.Screen()
-        self.screen.screensize()
-        self.screen.setup(width=self.screen_width_ratio, height=self.screen_height_ratio)
+
+        if self.pyramid_length is not None:
+            canvas_width = self.arrow_length + 2 * math.ceil(
+                abs(
+                    (
+                        math.sin(math.radians(self.tree_angle))
+                        * (self.pyramid_length - 1)
+                        * (self.arrow_length + 2 * self.dot_radius)
+                    )
+                )
+            )
+            canvas_height = 2 * math.ceil(
+                abs(
+                    (
+                        math.cos(math.radians(self.tree_angle))
+                        * (self.pyramid_length - 1)
+                        * (self.arrow_length + 2 * self.dot_radius)
+                    )
+                )
+            )
+        else:
+            canvas_width = self.screen.window_width()
+            canvas_height = self.screen.window_height()
+
+        print(canvas_width, canvas_height)
+        self.screen.screensize(canvas_width, canvas_height)
+        self.screen.setup(
+            width=self.screen_width_ratio, height=self.screen_height_ratio
+        )
 
         self.painter = turtle.Turtle(visible=False)
         self.painter.penup()
-        self.painter.goto(0, self.screen.window_height() / 2 - self.turtle_size)
+        self.painter.goto(
+            0, self.screen.window_height() / 2 - self.turtle_size
+        )  # replace self.screen.window_height() with canvas_height to init drawing at top of canvas
         self.painter.right(90)
         self.painter.pendown()
         self.painter.showturtle()
@@ -266,4 +298,3 @@ class Drawer:
     def end_drawing():
         """Static method. Ends drawing session"""
         turtle.done()
-
